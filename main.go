@@ -15,7 +15,7 @@ func main()  {
 	context := http.NewContext(cgi.GetEnvironMapFromEnvirons(os.Environ()), cfg)
 	cgi.SetPostParamsToContext(context)
 
-	myRouter := router.NewRouter("/cgi-bin/main")
+	myRouter := router.NewRouter("/cgi-bin/iogo")
 	myRouter.Get("/", controller.IndexHandler)
 	myRouter.Post("/auth", controller.AuthHandler)
 

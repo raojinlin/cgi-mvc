@@ -41,7 +41,8 @@ func (r *Router) Dispatch(ctx *http.Context) {
 		}
 	}
 
-	controller.NewController(ctx, handler).Output()
+	c := controller.NewController(ctx, handler)
+	c.Output()
 }
 
 func NewRouter(root string) *Router {

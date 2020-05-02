@@ -3,6 +3,7 @@ package controller
 import (
 	"bytes"
 	"fmt"
+	"iogo/cgi/filter"
 	"iogo/cgi/http"
 )
 
@@ -15,6 +16,7 @@ type Controller interface {
 type BaseController struct {
 	context *http.Context
 	handler Handler
+	filters []*filter.Filter
 }
 
 
@@ -22,42 +24,22 @@ func header(field, value string)  {
 	fmt.Printf("%s: %s\r\n", field, value)
 }
 
-func (c *BaseController) Filter() error {
-	return nil
-}
-
-func (c *BaseController) Middleware() error  {
-	return nil
-}
-
-func (c *BaseController) Output()  {
+func (c *BaseController) filter() error {
 	var err error
-	if c.context.Response.GetHeader("Content-Type") == "" {
-		c.context.Response.SetHeader("Content-Type", "text/html")
+	for _, f := range c.filters {
+		err = (*f)(c.context)
+		if err != nil {
+			return err
+		}
 	}
+	return err
+}
 
-	var status int
-	var result string
+func (c *BaseController) AddFilter(filter *filter.Filter) {
+	c.filters = append(c.filters, filter)
+}
 
-	err = c.Filter()
-	err = c.Middleware()
-
-	if err != nil {
-		status = 500
-		result = "Server Internal Error"
-	} else {
-		status, result = c.handler(c.context)
-	}
-
-	if c.context.Response.Body == nil {
-		var bf bytes.Buffer
-		bf.WriteString(result)
-		c.context.Response.Body = &bf
-		c.context.Response.SetLen(bf.Len())
-	}
-
-	c.context.Response.SetStatus(status)
-
+func (c *BaseController) output()  {
 	for field, value := range c.context.Response.Headers {
 		header(field, value)
 	}
@@ -80,7 +62,43 @@ func (c *BaseController) Output()  {
 }
 
 
+func (c *BaseController) Output()  {
+	var err error
+	if c.context.Response.GetHeader("Content-Type") == "" {
+		c.context.Response.SetHeader("Content-Type", "text/html")
+	}
+
+	err = c.filter()
+	if err != nil {
+		c.output()
+		return
+	}
+
+	status, result := c.handler(c.context)
+	if c.context.Response.Body == nil {
+		var bf bytes.Buffer
+		bf.WriteString(result)
+		c.context.Response.Body = &bf
+		c.context.Response.SetLen(bf.Len())
+	}
+
+	c.context.Response.SetStatus(status)
+	c.output()
+}
+
+func (c *BaseController) Init() {
+	c.AddFilter(&filter.AdminPathFilter)
+}
+
+
 
 func NewController(ctx *http.Context, handler Handler) *BaseController {
-	return &BaseController{context: ctx, handler: handler}
+	c := &BaseController{
+		context:    ctx,
+		handler:    handler,
+		filters:    make([]*filter.Filter, 0),
+	}
+
+	c.Init()
+	return c
 }
