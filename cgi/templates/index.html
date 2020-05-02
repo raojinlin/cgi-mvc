@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<div>
+    hello {{ .Name }}
+    <p>are you ok</p>
+    <form action="auth" method="post">
+        <div>
+            <span>Username</span>
+            <label for="username">
+                <input type="text" name="username" id="username" />
+            </label>
+        </div>
+        <div>
+            <span>Password</span>
+            <label for="password">
+                <input type="text" name="password" id="password" />
+            </label>
+        </div>
+
+        <div>
+            <input type="submit" value="Login" />
+        </div>
+    </form>
+</div>
+</body>
+</html>
