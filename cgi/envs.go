@@ -21,7 +21,7 @@ var Envs = []string {
 	"SHLVL=1",
 	"SERVER_PROTOCOL=HTTP/1.1",
 	"HTTP_COOKIE=session_id=195330b7c8a88be91d838c880a4ee25e",
-	"REQUEST_URI=/cgi-bin/main/hello/admin",
+	"REQUEST_URI=/sayHello",
 	"HTTP_ACCEPT_LANGUAGE=en-GB,en;q=0.5",
 	"HTTP_UPGRADE_INSECURE_REQUESTS=1",
 	"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",

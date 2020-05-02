@@ -15,7 +15,7 @@ func main()  {
 	context := http.NewContext(cgi.GetEnvironMapFromEnvirons(os.Environ()), cfg)
 	cgi.SetPostParamsToContext(context)
 
-	myRouter := router.NewRouter("/cgi-bin/iogo")
+	myRouter := router.NewRouter("/")
 	myRouter.Get("/", controller.IndexHandler)
 	myRouter.Get("/sayHello", controller.HelloHandler)
 	myRouter.Get("/api/json/hello", controller.HelloJsonResponse)

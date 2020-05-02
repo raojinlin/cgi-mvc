@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// 从环境变量获取配置
 func GetEnvironMapFromEnvirons(environs []string) map[string]string {
 	env := make(map[string]string)
 
@@ -23,6 +24,7 @@ func GetEnvironMapFromEnvirons(environs []string) map[string]string {
 	return env
 }
 
+// 从标准输入读取数据，如果是post方法，将数据设置到context
 func SetPostParamsToContext(ctx *http.Context) {
 	if ctx.Request.Method != "POST" {
 		return
