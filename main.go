@@ -17,6 +17,9 @@ func main()  {
 
 	myRouter := router.NewRouter("/cgi-bin/iogo")
 	myRouter.Get("/", controller.IndexHandler)
+	myRouter.Get("/sayHello", controller.HelloHandler)
+	myRouter.Get("/api/json/hello", controller.HelloJsonResponse)
+	myRouter.Get("/sayHello/:name", controller.HelloHandler)
 	myRouter.Post("/auth", controller.AuthHandler)
 
 	myRouter.Dispatch(context)
