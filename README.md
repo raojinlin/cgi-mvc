@@ -63,3 +63,10 @@ cgi配置: ```serve-cgi-bin.conf```
 </IfModule>
 
 ```
+
+### 环境变量
+
+```bash
+IOGO_CONFIG_FILE # 配置文件
+IOGO_TEST_ENV    # 测试环境
+```
