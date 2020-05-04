@@ -49,3 +49,21 @@ func SetPostParamsToContext(ctx *http.Context) {
 
 	ctx.Request.SetBody(string(bytes))
 }
+
+func GetConfigFile() string {
+	configFile := "./config.json"
+	if os.Getenv("IOGO_CONFIG_FILE") != "" {
+		configFile = os.Getenv("IOGO_CONFIG_FILE")
+	}
+
+	return configFile
+}
+
+func GetEnvs() map[string]string {
+	if os.Getenv("IOGO_TEST_ENV") != "" {
+		return GetEnvironMapFromEnvirons(Envs)
+	}
+
+	return GetEnvironMapFromEnvirons(os.Environ())
+}
+

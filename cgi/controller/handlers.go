@@ -7,15 +7,16 @@ import (
 )
 
 func NotFoundHandler(ctx *http.Context) (int, string) {
-	return 404, "<h1>404</h1> \n<p>Page Not Found.</p>\n " + ctx.ServerSignature
+	return 404, view2.NewErrorView(ctx).Render("404", "Page Not Found.", 404)
 }
 
 func InternalServerErrorHandler(ctx *http.Context) (int, string) {
-	return 500, "<h1>500</h1> \n<p>Internal Server Error.</p>\n " + ctx.ServerSignature
+	return 500, view2.NewErrorView(ctx).Render("Internal Server Error.", "Internal Server Error.", 500)
 }
 
 func AccessDenied(ctx *http.Context) (int, string) {
-	return 403, "<h1>403</h1>\n<p>Access Denied.</p>\n" + ctx.ServerSignature
+	view := view2.NewErrorView(ctx)
+	return 403, view.Render("Forbidden", "Access Denied.", 403)
 }
 
 

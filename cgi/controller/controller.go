@@ -64,8 +64,8 @@ func (c *BaseController) output()  {
 
 func (c *BaseController) Output()  {
 	var err error
-	if c.context.Response.GetHeader("Content-Type") == "" {
-		c.context.Response.SetHeader("Content-Type", "text/html")
+	if c.context.Response.GetContentType() == "" {
+		c.context.Response.SetContentType("text/html")
 	}
 
 	err = c.filter()
@@ -88,6 +88,7 @@ func (c *BaseController) Output()  {
 
 func (c *BaseController) Init() {
 	c.AddFilter(&filter.AdminPathFilter)
+	c.AddFilter(&filter.InvalidQueryParamsFilter)
 }
 
 

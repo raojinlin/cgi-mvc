@@ -1,6 +1,8 @@
 package http
 
-import "iogo/cgi/config"
+import (
+	"iogo/cgi/config"
+)
 
 type Context struct {
 	Request *Request
