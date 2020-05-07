@@ -45,7 +45,7 @@ func (res *Response) GetHeader(k string) string  {
 
 func (res *Response) SetStatus(status int) {
 	res.statusCode = status
-	res.SetHeader("Status", strconv.Itoa(res.statusCode) + " " + responses[res.statusCode])
+	res.SetHeader("Status", strconv.Itoa(res.statusCode) + " " + Status[res.statusCode])
 }
 
 func (res *Response) GetStatus() int  {

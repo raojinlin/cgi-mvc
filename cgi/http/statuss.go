@@ -1,13 +1,13 @@
 package http
 
-var responses = map[int]string {
-	// Information responses
+var Status = map[int]string {
+	// Information Status
 	100: "Continue",
 	101: "Switching Protocol",
 	102: "Processing",
 	103: "Early Hints",
 
-	// Successful responses
+	// Successful Status
 	200: "OK",
 	201: "Created",
 	202: "Accepted",
@@ -30,7 +30,7 @@ var responses = map[int]string {
 	307: "Temporary Redirect",
 	308: "Permanent Redirect",
 
-	// Client error responses
+	// Client error Status
 	400: "Bad Request",
 	401: "Unauthorized",
 	403: "Forbidden",
@@ -60,7 +60,7 @@ var responses = map[int]string {
 	431: "Request Header Fields Too Large",
 	451: "Unavailable For Legal Reasons",
 
-	// Server error responses
+	// Server error Status
 	500: "Internal Server Error",
 	501: "Not Implemented",
 	502: "Bad Gateway",

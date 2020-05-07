@@ -1,3 +1,6 @@
 {
-  "template_path": "/usr/local/apache2/htdocs/iogo/templates/"
+  "template_path": "/usr/local/apache2/htdocs/iogo/templates/",
+  "logger": {
+    "output": "/tmp/iogo"
+  }
 }

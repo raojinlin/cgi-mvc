@@ -4,6 +4,7 @@ import (
 	"iogo/cgi/config"
 	"iogo/cgi/controller"
 	"iogo/cgi/http"
+	"iogo/cgi/middleware"
 	"iogo/cgi/router"
 )
 
@@ -32,9 +33,14 @@ func (app *Application) RoutePost(path string, handler controller.Handler)  {
 	app.router.Post(path, handler)
 }
 
+func (app *Application) Route() *router.Router  {
+	return app.router
+}
+
 func NewApplication(root string) *Application  {
 	app := &Application{root: root}
 	app.init()
+	app.router.Use(middleware.Logger)
 
 	return app
 }

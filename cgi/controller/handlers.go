@@ -28,7 +28,7 @@ func IndexHandler(ctx *http.Context) (int, string) {
 }
 
 func AuthHandler(ctx *http.Context) (int, string) {
-	sessionCookie := ctx.Request.GetCookie("session")
+	sessionCookie := ctx.Cookie("session")
 	if sessionCookie != nil && sessionCookie.Value == "yes" {
 		ctx.Response.Redirect("/index.html?name=123")
 		ctx.Response.SetCookie(&http.Cookie{
@@ -40,16 +40,14 @@ func AuthHandler(ctx *http.Context) (int, string) {
 
 	if ctx.Request.PostPrams["username"] == "user" && ctx.Request.PostPrams["password"] == "pass" {
 		tm := time.Now()
-		ctx.Response.SetCookie(&http.Cookie{
-			Key:      "session",
-			Value:    "yes",
-			Domain:   "127.0.0.1",
-			Path:     "/",
-			Expires:  &tm,
-			MaxAge:   0,
-			HttpOnly: false,
-			Secure:   false,
-		})
+		cookie := http.NewCookie(ctx.Request.RemoteAddr)
+		cookie.HttpOnly = true
+		cookie.Path = "/"
+		cookie.Expires = &tm
+		cookie.Key = "session"
+		cookie.Value = "yes"
+
+		ctx.Response.SetCookie(cookie)
 
 		ctx.Response.Redirect("/index.html")
 		return 301, "ok"

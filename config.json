@@ -1,3 +1,6 @@
 {
-  "template_path": "/home/raojinlin/GolandProjects/src/iogo/docker/templates/"
+  "template_path": "/home/raojinlin/GolandProjects/src/iogo/docker/htdocs/templates/",
+  "logger": {
+    "output": "/tmp/iogo"
+  }
 }

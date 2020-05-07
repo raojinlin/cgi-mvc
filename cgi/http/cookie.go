@@ -13,6 +13,7 @@ type Cookie struct {
 	Expires *time.Time
 	MaxAge int
 	HttpOnly bool
+	SameSite bool
 	Secure bool
 }
 
@@ -45,4 +46,10 @@ func (c *Cookie) String() string {
 	}
 
 	return cookieString
+}
+
+func NewCookie(domain string) *Cookie {
+	return &Cookie{
+		Domain: domain,
+	}
 }

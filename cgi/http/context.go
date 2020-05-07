@@ -2,6 +2,7 @@ package http
 
 import (
 	"iogo/cgi/config"
+	"iogo/cgi/logger"
 )
 
 type Context struct {
@@ -21,6 +22,15 @@ type Context struct {
 	Scheme string
 
 	Config *config.Config
+	Logger *logger.FileLogger
+}
+
+func (ctx *Context) Cookie(name string) *Cookie {
+	return ctx.Request.GetCookie(name)
+}
+
+func (ctx *Context) Redirect(location string)  {
+	ctx.Response.Redirect(location)
 }
 
 func NewContext(envs map[string]string, config *config.Config) *Context  {
@@ -35,5 +45,6 @@ func NewContext(envs map[string]string, config *config.Config) *Context  {
 		Request:          NewRequest(envs, envs["REQUEST_SCHEME"]),
 		Response:         NewResponse(200),
 		Config:           config,
+		Logger:           logger.NewFileLogger("Context", config.Logger.Output, logger.LogInfo),
 	}
 }

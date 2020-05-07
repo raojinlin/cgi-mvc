@@ -9,7 +9,7 @@ func main()  {
 	app := cgi.NewApplication("/")
 
 	app.RouteGet("/", controller.IndexHandler)
-	app.RouteGet("/sayHello", controller.HelloHandler)
+	app.Route().Get("/sayHello", controller.HelloHandler)
 	app.RouteGet("/api/json/hello", controller.HelloJsonResponse)
 	app.RouteGet("/sayHello/:name", controller.HelloHandler)
 	app.RoutePost("/auth", controller.AuthHandler)
